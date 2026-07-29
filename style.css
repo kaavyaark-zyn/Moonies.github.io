@@ -1,0 +1,257 @@
+/* ============================================
+   Moonez Blog — Galaxy Theme
+   Deep blues, light purples, drifting starfield
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Literata:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  --bg-void:      #0a0b1e;
+  --bg-nebula:    #171a3d;
+  --purple-soft:  #c9b6f2;
+  --purple-glow:  #a78bfa;
+  --blue-mid:     #5b6fd8;
+  --text-main:    #e6e3f5;
+  --text-dim:     #a8a4c9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 3rem 1.5rem 5rem;
+  min-height: 100vh;
+  background-color: var(--bg-void);
+  color: var(--text-main);
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: center;
+  transition: background-position 0.2s ease-out;
+
+  /* Layered nebula glow + starfield */
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(167, 139, 250, 0.18), transparent 60%),
+    radial-gradient(ellipse 700px 600px at 100% 10%, rgba(91, 111, 216, 0.20), transparent 55%),
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 75% 15%, #fff, transparent),
+    radial-gradient(1px 1px at 50% 60%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 75%, #fff, transparent),
+    radial-gradient(1px 1px at 35% 90%, #fff, transparent),
+    radial-gradient(1px 1px at 65% 40%, #fff, transparent),
+    radial-gradient(2px 2px at 85% 55%, #d9c9ff, transparent),
+    radial-gradient(2px 2px at 45% 20%, #d9c9ff, transparent),
+    linear-gradient(180deg, var(--bg-void) 0%, var(--bg-nebula) 55%, var(--bg-void) 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0%   { background-color: var(--bg-void); }
+  50%  { filter: brightness(1.06); }
+  100% { background-color: #0b0d24; }
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 2.6rem;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(100deg, var(--purple-soft) 10%, var(--blue-mid) 55%, var(--purple-glow) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 40px rgba(167, 139, 250, 0.25);
+}
+
+h1::after {
+  content: "";
+  display: block;
+  margin: 0.9rem auto 0;
+  height: 1px;
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(90deg, transparent, var(--purple-glow), transparent);
+}
+
+h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: var(--purple-soft);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 3rem 0 1.2rem;
+}
+
+h2::before {
+  content: "✦ ";
+  color: var(--blue-mid);
+}
+
+p {
+  max-width: 640px;
+  margin: 1rem auto;
+  color: var(--text-dim);
+}
+
+p:first-of-type::first-letter {
+  color: var(--purple-glow);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+a {
+  color: var(--purple-glow);
+  text-decoration-color: rgba(167, 139, 250, 0.4);
+}
+
+a:hover {
+  color: var(--purple-soft);
+}
+
+/* Grid that holds all video thumbnails.
+   flex-wrap + justify-content:center means: 3 items fill a row edge
+   to edge, but a lone trailing item (4th, 7th, etc.) automatically
+   centers itself on its own row — no extra markup needed. */
+.video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Each video's wrapper — this is what glows on hover */
+.video-item {
+  position: relative;
+  flex: 0 1 300px;
+  border-radius: 14px;
+  padding: 6px;
+  isolation: isolate;
+}
+
+.video-item::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 16px;
+  background: radial-gradient(220px circle at var(--x, 50%) var(--y, 50%),
+              rgba(167, 139, 250, 0.55), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.video-item:hover::before {
+  opacity: 1;
+}
+
+video {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  box-shadow: 0 0 0 1px rgba(10, 11, 30, 0.6), 0 20px 60px -20px rgba(91, 111, 216, 0.5);
+  background: var(--bg-nebula);
+}
+
+/* Fade-in state controlled by script.js */
+.fade-in {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+video:focus-visible {
+  outline: 2px solid var(--purple-glow);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; }
+  body { padding: 2rem 1rem 3rem; }
+}
+
+.squad-lock {
+  max-width: 340px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  border-radius: 14px;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  background: rgba(23, 26, 61, 0.6);
+  box-shadow: 0 20px 60px -20px rgba(91, 111, 216, 0.5);
+}
+
+.squad-lock-text {
+  margin: 0 0 1rem;
+  color: var(--text-dim);
+}
+
+.squad-lock input[type="password"] {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  background: var(--bg-void);
+  color: var(--text-main);
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1rem;
+}
+
+.squad-lock input[type="password"]:focus-visible {
+  outline: 2px solid var(--purple-glow);
+  outline-offset: 2px;
+}
+
+.squad-lock button {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(100deg, var(--purple-soft), var(--blue-mid));
+  color: var(--bg-void);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.squad-lock button:hover {
+  filter: brightness(1.08);
+}
+
+.squad-error {
+  min-height: 1.2em;
+  margin: 0.6rem 0 0;
+  color: #f2a3c9;
+  font-size: 0.9rem;
+}
+
+/* Fix: .video-grid sets display:flex, which overrides the browser's
+   built-in [hidden] { display:none } rule since author CSS always
+   wins over user-agent defaults. This rule restores the hide. */
+.video-grid[hidden] {
+  display: none;
+}
